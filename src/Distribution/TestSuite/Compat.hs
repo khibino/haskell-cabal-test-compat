@@ -11,7 +11,7 @@
 --
 -- This module provides subset of compatibility interface names
 -- for Cabal older than 1.16.
-module Distribution.TestSuite.Compat (prop, Tests, tests) where
+module Distribution.TestSuite.Compat (prop, TestList, testList) where
 
 import Test.QuickCheck (Testable, quickCheckResult, Result (Success))
 
@@ -41,11 +41,11 @@ prop :: Testable prop => prop -> String -> Test
 prop t = suite $ qcEither <$> quickCheckResult t
 
 -- | Interface type of 'Test' list to export.
-type Tests = IO [Test]
+type TestList = IO [Test]
 
 -- | Convert interface into 'Test' list to export.
-tests :: [Test] -> Tests
-tests =  return
+testList :: [Test] -> TestList
+testList =  return
 
 #else
 
@@ -90,11 +90,11 @@ prop t n = impure $ Suite114 n t
 
 
 -- | Interface type of 'Test' list to export.
-type Tests = [Test]
+type TestList = [Test]
 
 -- | Convert interface into 'Test' list to export.
-tests :: [Test] -> Tests
-tests =  id
+testList :: [Test] -> TestList
+testList =  id
 
 #endif
 
