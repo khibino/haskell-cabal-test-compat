@@ -1,12 +1,12 @@
 name:                cabal-test-compat
-version:             0.1.0.0
+version:             0.2.0.0
 synopsis:            Compatibility interface of cabal test-suite.
 description:         This package provides compatibility interface module
                      of cabal test-suite.
 homepage:            http://twitter.com/khibino/
 license:             BSD3
 license-file:        LICENSE
-author:              Kei HIBINO
+author:              Kei Hibino
 maintainer:          ex8k.hibino@gmail.com
 copyright:           Copyright (c) 2015 Kei Hibino
 category:            Testing
