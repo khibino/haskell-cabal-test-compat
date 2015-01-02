@@ -24,12 +24,12 @@ import Distribution.TestSuite
   (Test (Test), TestInstance (TestInstance), Result (Pass, Fail, Error), Progress (Finished))
 
 
-simpleInstance :: IO Progress -> String -> Test
-simpleInstance p name = Test this  where
+simpleInstance :: String -> IO Progress -> Test
+simpleInstance name p = Test this  where
   this = TestInstance p name [] [] (\_ _ -> Right this)
 
-suite :: IO (Either String ()) -> String -> Test
-suite t = simpleInstance $ do
+suite :: String -> IO (Either String ()) -> Test
+suite n t = simpleInstance n $ do
   er <- try t
   return . Finished $ case er of
     Right (Right ()) -> Pass
@@ -37,8 +37,8 @@ suite t = simpleInstance $ do
     Left e           -> Error $ show (e :: IOError)
 
 -- | Interface to make 'Test'.
-prop :: Testable prop => prop -> String -> Test
-prop t = suite $ qcEither <$> quickCheckResult t
+prop :: Testable prop => String -> prop -> Test
+prop n t = suite n $ qcEither <$> quickCheckResult t
 
 -- | Interface type of 'Test' list to export.
 type TestList = IO [Test]
@@ -81,12 +81,12 @@ instance Testable prop => ImpureTestable (Suite114 prop) where
   runM (Suite114 _ t) _ = prop114 t
 
 -- -- | Interface to make 'Test'.
--- suite :: IO (Either String ()) -> String -> Test
--- suite t n = impure $ Suite114 n t
+-- suite :: String -> IO (Either String ()) -> Test
+-- suite n t = impure $ Suite114 n t
 
 -- | Interface to make 'Test'.
-prop :: Testable prop => prop -> String -> Test
-prop t n = impure $ Suite114 n t
+prop :: Testable prop => String -> prop -> Test
+prop n t = impure $ Suite114 n t
 
 
 -- | Interface type of 'Test' list to export.
