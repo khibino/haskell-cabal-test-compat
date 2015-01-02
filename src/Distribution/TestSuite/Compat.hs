@@ -73,7 +73,7 @@ prop114 mayEmsg t = test114 mayEmsg $ qcEither <$> quickCheckResult t
 data Suite114 t = Suite114 String (Maybe String) t
 
 instance TestOptions (Suite114 prop) where
-  name (Suite114 n _) = n
+  name (Suite114 n _ _) = n
   options = const []
   defaultOptions = const . return $ Options []
   check _ _ = []
